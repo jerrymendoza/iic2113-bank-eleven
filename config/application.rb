@@ -10,9 +10,9 @@ module RepoBase
         origins '*'
         resource '/public/*', headers: :any, methods: :get
         resource '/api/*',
-          headers: :any,
-          expose: ['X-Page', 'X-PageTotal'],
-          methods: [:get, :post, :patch, :put, :delete, :options]
+                 headers: :any,
+                 expose: ['X-Page', 'X-PageTotal'],
+                 methods: [:get, :post, :patch, :put, :delete, :options]
       end
     end
 
@@ -20,5 +20,6 @@ module RepoBase
     config.i18n.default_locale = 'es-CL'
     config.assets.paths << Rails.root.join('node_modules')
     config.load_defaults 6.0
+    config.app_generators.scaffold_controller = :scaffold_controller
   end
 end
