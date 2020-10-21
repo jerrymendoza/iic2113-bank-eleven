@@ -12,8 +12,10 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations" }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :user do
-    resources :accounts, only: [:show, :index]
+    resources :accounts, only: [:show, :index] do
+      resources :transactions, only: [:index]
+    end
   end
-  resources :transactions, only: [:new, :create, :index]
+  resources :transactions, only: [:new, :create]
   
 end

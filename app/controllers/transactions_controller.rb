@@ -1,6 +1,7 @@
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
   before_action :set_new_transaction, only: %i[new_saving new_transfer]
+  before_action  :set_user_account, only: [:index]
 
 
   # GET /transactions
@@ -26,8 +27,8 @@ class TransactionsController < ApplicationController
   end
 
   # GET /transactions/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /transactions
   # POST /transactions.json
@@ -43,7 +44,7 @@ class TransactionsController < ApplicationController
       if !target_account.nil?
           make_transfer(origin_account, amount, date, 0)
           make_deposit(target_account, amount, date, 1)
-          redirect_to(action: 'index', notice: 'Transaction was successfully created.')  
+          redirect_to(user_account_transactions_path(current_user, origin_account), notice: 'Transaction was successfully created.')  
       else
         redirect_back(fallback_location: { action: "index", notice: 'Error creating transaction.' })
       end
@@ -54,7 +55,7 @@ class TransactionsController < ApplicationController
       target_account = Account.find_by(id: params[:target_account_id])
       make_transfer(origin_account, amount, date, 0)
       make_deposit(target_account, amount, date, 2)
-      redirect_to(action: 'index', notice: 'Transaction was successfully created.')    
+      redirect_to(user_account_transactions_path(current_user, origin_account), notice: 'Transaction was successfully created.')    
 
     else
       redirect_back(fallback_location: { action: "index", notice: 'Error creating transaction.' })
@@ -76,27 +77,27 @@ class TransactionsController < ApplicationController
 
   # PATCH/PUT /transactions/1
   # PATCH/PUT /transactions/1.json
-  def update
-    respond_to do |format|
-      if @transaction.update(transaction_params)
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully updated.' }
-        format.json { render :show, status: :ok, location: @transaction }
-      else
-        format.html { render :edit }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+  #   respond_to do |format|
+  #     if @transaction.update(transaction_params)
+  #       format.html { redirect_to @transaction, notice: 'Transaction was successfully updated.' }
+  #       format.json { render :show, status: :ok, location: @transaction }
+  #     else
+  #       format.html { render :edit }
+  #       format.json { render json: @transaction.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
-  # DELETE /transactions/1
-  # DELETE /transactions/1.json
-  def destroy
-    @transaction.destroy
-    respond_to do |format|
-      format.html { redirect_to transactions_url, notice: 'Transaction was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+  # # DELETE /transactions/1
+  # # DELETE /transactions/1.json
+  # def destroy
+  #   @transaction.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to transactions_url, notice: 'Transaction was successfully destroyed.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -125,10 +126,14 @@ class TransactionsController < ApplicationController
       target_transaction.save
     end 
 
-
+    def set_user_account
+      @user = User.find(params[:user_id])
+      @account = Account.find(params[:account_id])
+    end
     # Only allow a list of trusted parameters through.
     def transaction_params
       params.require(:transaction).permit(:amount, :date, :transaction_type, :balance, :state, :account_id,
       :confirmation_code, :target_account_number, :origin_account_number)
     end
+
 end

@@ -6,7 +6,7 @@
     <% if user_signed_in? %>
       <li><%= link_to "Home", root_path %></li>
       <li><%= link_to "Accounts", user_accounts_path(current_user) %></li>
-      <li><%= link_to "Transactions", transactions_path %></li>
+      <li> <%= link_to 'Make a Transaction', new_transaction_path %></li>
     <% end %>
     </ul>
 </div>

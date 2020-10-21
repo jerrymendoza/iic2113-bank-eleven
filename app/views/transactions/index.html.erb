@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Transactions</h1>
+<h1>Transactions of account <%= @account.number %> </h1>
 
 <table>
   <thead>
@@ -18,15 +18,17 @@
 
   <tbody>
     <% @transactions.each do |transaction| %>
-      <tr>
-        <td><%= transaction.amount %></td>
-        <td><%= transaction.date %></td>
-        <td><%= transaction.transaction_type %></td>
-        <td><%= transaction.balance %></td>
-        <td><%= transaction.state %></td>
-        <td><%= transaction.confirmation_code %></td>
-        <td><%= transaction.account_id %></td>
-      </tr>
+      <% if transaction.account_id == @account.id && @user.id == current_user.id%>
+        <tr>
+          <td><%= transaction.amount %></td>
+          <td><%= transaction.date %></td>
+          <td><%= transaction.transaction_type %></td>
+          <td><%= transaction.balance %></td>
+          <td><%= transaction.state %></td>
+          <td><%= transaction.confirmation_code %></td>
+          <td><%= transaction.account_id %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
