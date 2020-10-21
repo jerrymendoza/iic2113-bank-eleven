@@ -1,25 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe "transactions/index", type: :view do
-  before(:each) do
+  before do
     assign(:transactions, [
-      Transaction.create!(
-        amount: 2,
-        transaction_type: 3,
-        balance: 4,
-        state: "",
-        confirmation_code: 5,
-        account: nil
-      ),
-      Transaction.create!(
-        amount: 2,
-        transaction_type: 3,
-        balance: 4,
-        state: "",
-        confirmation_code: 5,
-        account: nil
-      )
-    ])
+             Transaction.create!(
+               amount: 2,
+               transaction_type: 3,
+               balance: 4,
+               state: "",
+               confirmation_code: 5,
+               account: nil
+             ),
+             Transaction.create!(
+               amount: 2,
+               transaction_type: 3,
+               balance: 4,
+               state: "",
+               confirmation_code: 5,
+               account: nil
+             )
+           ])
   end
 
   it "renders a list of transactions" do

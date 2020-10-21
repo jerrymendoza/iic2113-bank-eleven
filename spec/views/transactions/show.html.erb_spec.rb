@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe "transactions/show", type: :view do
-  before(:each) do
+  before do
     @transaction = assign(:transaction, Transaction.create!(
-      amount: 2,
-      transaction_type: 3,
-      balance: 4,
-      state: "",
-      confirmation_code: 5,
-      account: nil
-    ))
+                                          amount: 2,
+                                          transaction_type: 3,
+                                          balance: 4,
+                                          state: "",
+                                          confirmation_code: 5,
+                                          account: nil
+                                        ))
   end
 
   it "renders attributes in <p>" do
