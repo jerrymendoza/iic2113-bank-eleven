@@ -1,0 +1,47 @@
+
+body {
+  margin: 0;
+}
+
+.content {
+  margin: 10px auto;
+  width: 70%;
+}
+
+.clearfix {
+  overflow: hidden;
+}
+
+header {
+  background: light-grey;
+  padding: 20px;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  li {
+    color: white;
+    display: inline;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.left-nav {
+  color: white;
+  float: left;
+}
+
+.right-nav {
+  color: red;
+  float: right;
+}

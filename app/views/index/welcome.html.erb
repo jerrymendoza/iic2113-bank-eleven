@@ -7,6 +7,6 @@
 <li><%= link_to 'Registrarse',new_user_registration_path %></li>
 <% if user_signed_in? %>
   <% current_user.accounts.each do |account|%>
-    <td> <%=account.id%><td>
+    <td> <%=account.number.class%><td>
   <%end%>
 <% end %>

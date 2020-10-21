@@ -2,18 +2,21 @@ class Account < ApplicationRecord
   before_create :new_unique_number
 
   def new_unique_number
-    last_account = Account.order('number DESC').first
+    last_account = Account.order('number::integer DESC').first
+    puts last_account
     # Esto es asi, pq si no habia un numero, no encontraba un account
     last_number = if last_account
                     last_account.number
                   else
-                    rand(1..100).to_s
+                    rand(1..10).to_s
                   end
-    self.number = (last_number.to_i + rand(1..100)).to_s
+    puts last_number
+    self.number = (last_number.to_i + rand(1..10)).to_s
   end
 
   enum account_type: { current: 0, saving: 1 }
   belongs_to :user, dependent: :delete
+  has_many :transactions, dependent: :destroy
 end
 
 # == Schema Information
