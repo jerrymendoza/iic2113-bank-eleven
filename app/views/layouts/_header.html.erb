@@ -1,0 +1,24 @@
+
+<html>
+<header class='clearfix'>
+  <div class="left-nav">
+    <ul>
+    <% if user_signed_in? %>
+      <li><%= link_to "Home", root_path %></li>
+      <li><%= link_to "Accounts", user_accounts_path(current_user) %></li>
+      <li><%= link_to "Transactions", transactions_path %></li>
+    <% end %>
+    </ul>
+</div>
+
+  <div class="right-nav">
+    <ul>
+    <% if user_signed_in? %>
+          <div class="user_logout">
+          <li> <%= link_to 'Sign out', destroy_user_session_path, method: :delete %> </li>
+          </div>
+    <% end %>
+    </ul>
+  </div>
+</header>
+</html>
