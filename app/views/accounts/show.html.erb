@@ -15,10 +15,4 @@
   <%= @account.account_type %>
 </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @account.user_id %>
-</p>
-
-<%= link_to 'Edit', edit_account_path(@account) %> |
-<%= link_to 'Back', accounts_path %>
+<%= link_to 'Back', user_accounts_path(@user) %>

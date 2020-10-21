@@ -13,7 +13,7 @@ class Account < ApplicationRecord
   end
 
   enum account_type: { current: 0, saving: 1 }
-  belongs_to :user, dependent: :destroy
+  belongs_to :user, dependent: :delete
 end
 
 # == Schema Information
