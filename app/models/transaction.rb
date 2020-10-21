@@ -17,6 +17,7 @@ end
 #  account_id        :bigint(8)        not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  account_number    :string
 #
 # Indexes
 #

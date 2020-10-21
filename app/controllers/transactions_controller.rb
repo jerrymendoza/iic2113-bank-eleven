@@ -42,8 +42,8 @@ class TransactionsController < ApplicationController
       origin_account = Account.find_by(id: params[:origin_account_id])
       target_account = Account.find_by_number(transaction_params[:target_account_number])
       if !target_account.nil?
-          make_transfer(origin_account, amount, date, 0)
-          make_deposit(target_account, amount, date, 1)
+          make_transfer(origin_account, amount, date, 0, target_account.number)
+          make_deposit(target_account, amount, date, 1, origin_account.number)
           redirect_to(user_account_transactions_path(current_user, origin_account), notice: 'Transaction was successfully created.')  
       else
         redirect_back(fallback_location: { action: "index", notice: 'Error creating transaction.' })
@@ -53,8 +53,8 @@ class TransactionsController < ApplicationController
     elsif transaction_type == 2
       origin_account = Account.find_by(id: params[:origin_account_id])
       target_account = Account.find_by(id: params[:target_account_id])
-      make_transfer(origin_account, amount, date, 0)
-      make_deposit(target_account, amount, date, 2)
+      make_transfer(origin_account, amount, date, 0, target_account.number)
+      make_deposit(target_account, amount, date, 2, origin_account.number)
       redirect_to(user_account_transactions_path(current_user, origin_account), notice: 'Transaction was successfully created.')    
 
     else
@@ -110,19 +110,22 @@ class TransactionsController < ApplicationController
       @accounts = Account.where(user_id: current_user.id)
     end
 
-    def make_transfer(origin_account, amount, date, transaction_type)
+    def make_transfer(origin_account, amount, date, transaction_type, another_account_number)
       origin_account.balance -= amount
       origin_account.save
-      origin_transaction = Transaction.new(transaction_type: 0,
-       amount: amount, date: date, balance: origin_account.balance, account_id: origin_account.id)
+      new_confirmation_code = rand(10000..100000)
+      origin_transaction = Transaction.new(transaction_type: transaction_type,
+       amount: amount, date: date, balance: origin_account.balance, account_id: origin_account.id,
+       account_number: another_account_number, state: false, confirmation_code: new_confirmation_code)
       origin_transaction.save
     end 
 
-    def make_deposit(target_account, amount, date, transaction_type)
+    def make_deposit(target_account, amount, date, transaction_type, another_account_number)
       target_account.balance += amount
       target_account.save
       target_transaction = Transaction.new(transaction_type: transaction_type,
-       amount: amount, date: date, balance: target_account.balance, account_id: target_account.id)
+       amount: amount, date: date, balance: target_account.balance, account_id: target_account.id,
+      account_number: another_account_number, state: true)
       target_transaction.save
     end 
 
