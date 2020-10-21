@@ -5,3 +5,4 @@
 <li><%= link_to current_user, '/users/sign_out', method: :delete, data: {confirm: 'Are you sure?'} %></li>
 <li><%= link_to current_user, '/users', method: :delete, data: {confirm: 'Are you sure?'} %></li>
 <li><%= link_to 'Registrarse',new_user_registration_path %></li>
+<%= current_user.accounts.find(2).number%>

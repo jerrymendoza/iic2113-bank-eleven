@@ -6,13 +6,13 @@ RSpec.describe "accounts/index", type: :view do
              Account.create!(
                number: "Number",
                balance: 2,
-               savings: 3,
+               account_type: 3,
                user: nil
              ),
              Account.create!(
                number: "Number",
                balance: 2,
-               savings: 3,
+               account_type: 3,
                user: nil
              )
            ])

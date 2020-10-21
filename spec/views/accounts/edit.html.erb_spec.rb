@@ -5,7 +5,7 @@ RSpec.describe "accounts/edit", type: :view do
     @account = assign(:account, Account.create!(
                                   number: "MyString",
                                   balance: 1,
-                                  savings: 1,
+                                  account_type: 1,
                                   user: nil
                                 ))
   end
@@ -18,7 +18,7 @@ RSpec.describe "accounts/edit", type: :view do
 
       assert_select "input[name=?]", "account[balance]"
 
-      assert_select "input[name=?]", "account[savings]"
+      assert_select "input[name=?]", "account[account_type]"
 
       assert_select "input[name=?]", "account[user_id]"
     end

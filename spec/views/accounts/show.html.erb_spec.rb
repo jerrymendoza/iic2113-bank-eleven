@@ -5,7 +5,7 @@ RSpec.describe "accounts/show", type: :view do
     @account = assign(:account, Account.create!(
                                   number: "Number",
                                   balance: 2,
-                                  savings: 3,
+                                  account_type: 3,
                                   user: nil
                                 ))
   end

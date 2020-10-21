@@ -11,9 +11,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super do |user|
+    super
+    if current_user
       current_amount = rand(10000..100000)
-      user.account = Account.create(balance: current_amount, savings: 0, user: current_user)
+      current_user.accounts.create(balance: current_amount, account_type: 0)
+      current_user.accounts.create(balance: 0, account_type: 1)
     end
   end
 

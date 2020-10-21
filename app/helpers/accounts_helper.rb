@@ -2,13 +2,13 @@
 #
 # Table name: accounts
 #
-#  id         :bigint(8)        not null, primary key
-#  number     :string           not null
-#  balance    :integer          not null
-#  savings    :integer          not null
-#  user_id    :bigint(8)        not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :bigint(8)        not null, primary key
+#  number       :string
+#  balance      :integer
+#  account_type :integer
+#  user_id      :bigint(8)        not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #
 # Indexes
 #

@@ -11,6 +11,8 @@ class Account < ApplicationRecord
                   end
     self.number = (last_number.to_i + rand(1..100)).to_s
   end
+
+  enum account_type: { current: 0, saving: 1 }
   belongs_to :user, dependent: :destroy
 end
 
@@ -18,13 +20,13 @@ end
 #
 # Table name: accounts
 #
-#  id         :bigint(8)        not null, primary key
-#  number     :string           not null
-#  balance    :integer          not null
-#  savings    :integer          not null
-#  user_id    :bigint(8)        not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :bigint(8)        not null, primary key
+#  number       :string
+#  balance      :integer
+#  account_type :integer
+#  user_id      :bigint(8)        not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #
 # Indexes
 #
