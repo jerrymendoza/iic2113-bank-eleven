@@ -32,17 +32,21 @@ class TransactionsController < ApplicationController
     transaction_type = params[:transaction_type].to_i
     amount = transaction_params[:amount].to_i
     date = DateTime.now.strftime("%d/%m/%Y %H:%M")
-
+    user_code = transaction_params[:confirmation_code]
+    
     # Between other acounts
     if transaction_type.zero?
       origin_account = Account.find_by(id: params[:origin_account_id])
       target_account = Account.find_by(number: transaction_params[:target_account_number])
-      if !target_account.nil?
+      if !target_account.nil? && verify_code("0000", user_code)
+        puts "\nel codigo esta BIEN\n"
         make_transfer(origin_account, amount, date, 0, target_account.number)
         make_deposit(target_account, amount, date, 1, origin_account.number)
         redirect_to(user_account_transactions_path(current_user, origin_account),
                     notice: 'Transaction was successfully created.')
+       
       else
+        puts "\nel codigo esta MAL\n"
         redirect_back(fallback_location: { action: "index",
                                            notice: 'Error creating transaction.' })
       end
@@ -72,6 +76,12 @@ class TransactionsController < ApplicationController
     # end
   end
 
+  def send_email
+    puts "\nentre al send email\n"
+    format.html { redirect_to @user, notice: 'User was successfully updated.' }
+    redirect_back(fallback_location: { action: "index" })
+  end
+
   # PATCH/PUT /transactions/1
   # PATCH/PUT /transactions/1.json
   # def update
@@ -96,6 +106,7 @@ class TransactionsController < ApplicationController
   #     format.json { head :no_content }
   #   end
   # end
+
 
   private
 
@@ -145,4 +156,13 @@ class TransactionsController < ApplicationController
                                         :state, :account_id, :confirmation_code,
                                         :target_account_number, :origin_account_number)
   end
+
+  def verify_code(original_code, user_code)
+    if original_code == user_code
+      return true
+    end
+    return false
+    
+  end
+
 end

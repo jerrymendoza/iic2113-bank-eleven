@@ -28,6 +28,12 @@
     <%= form.number_field(:target_account_number) %>
   </div>
 
+  <div class="field">
+    <%= form.label :confirmation_code %>
+    <%= form.number_field :confirmation_code %>
+    <%= link_to 'Request Code ', transactions_send_email_path() %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
