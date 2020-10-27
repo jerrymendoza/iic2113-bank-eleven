@@ -17,6 +17,10 @@
           <div class="user_logout">
           <li> <%= link_to 'Sign out', destroy_user_session_path, method: :delete %> </li>
           </div>
+
+          <div class="user_token">
+          <li> <%= link_to "Obten tu token de acceso para la api !!", api_token_user_path(current_user)%> </li>
+          </div>
     <% end %>
     </ul>
   </div>
