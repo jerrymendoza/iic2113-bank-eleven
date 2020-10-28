@@ -47,14 +47,6 @@ class TransactionsController < ApplicationController
         target_transaction = make_deposit(target_account, amount, date, 1, origin_account.number, false)
         UserMailer.with(current_user: current_user).code_confirmation(current_user, origin_transaction.confirmation_code).deliver_now
         # make_deposit(target_account, amount, date, 1, origin_account.number)
-     
-        puts "\n\nme acabo de crear origin_transaction, el id es:"
-        puts origin_transaction.id
-        puts "\n\nme acabo de crear  target_transaction, el id es:"
-        puts  target_transaction.id
-
-
-
         redirect_to(confirm_transaction_path(origin_transaction.id, target_transaction.id ))
 
         #redirect_to(user_account_transactions_path(current_user, origin_account),
@@ -102,8 +94,9 @@ class TransactionsController < ApplicationController
     confirmation_code_user= params.require(:post).permit(:confirmation_code_user)
     confirmation_code_user = confirmation_code_user[:confirmation_code_user]
     if verify_code(@origin_transaction.confirmation_code, confirmation_code_user)
-      origin_account = Account.find_by(id: @origin_transaction.account_id)
-      redirect_to(user_account_transactions_path(current_user,  origin_account), notice: 'Transaction was successfully created.')
+      changestate(@origin_transaction, @target_transaction)
+      #origin_account = Account.find_by(id: @origin_transaction.account_id)
+      #redirect_to(user_account_transactions_path(current_user,  origin_account), notice: 'Transaction was successfully created.')
 
     else
       redirect_back(fallback_location: { action: "index",
@@ -114,6 +107,17 @@ class TransactionsController < ApplicationController
     
   end
 
+  def changestate(origin_transaction, target_transaction)
+    origin_transaction.state = true
+    target_transaction.state = true
+    if origin_transaction.save  && target_transaction.save
+      origin_account = Account.find_by(id: origin_transaction.account_id)
+      redirect_to(user_account_transactions_path(current_user,  origin_account), notice: 'Transaction was successfully created.')
+    else
+      redirect_back(fallback_location: { action: "index",
+        notice: 'Error creating transaction.' })
+    end
+  end
   # PATCH/PUT /transactions/1
   # PATCH/PUT /transactions/1.json
   # def update
