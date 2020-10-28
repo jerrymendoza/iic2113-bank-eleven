@@ -8,9 +8,10 @@ class User < ApplicationRecord
   after_create :generate_api_token
 
   private
+
   def generate_api_token
     self.api_token = Devise.friendly_token
-    self.save
+    save
   end
 end
 

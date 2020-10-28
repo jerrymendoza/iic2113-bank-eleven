@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get 'api_token'
-    end 
+    end
     resources :accounts, only: [:show, :index] do
       resources :transactions, only: [:index]
     end
@@ -28,6 +28,5 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :transactions, only: [:index]
     end
-  end 
-
+  end
 end

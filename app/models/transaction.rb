@@ -1,5 +1,6 @@
 class Transaction < ApplicationRecord
   belongs_to :account
+  validates :amount, presence: true
   enum transaction_type: { transfer: 0, deposit: 1, saving: 2 }
 end
 
