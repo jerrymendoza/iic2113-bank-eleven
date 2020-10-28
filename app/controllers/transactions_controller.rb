@@ -11,7 +11,9 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/1
   # GET /transactions/1.json
-  # def show; end
+  def show 
+    render json: @transaction
+  end
 
   def new_transfer; end
 
