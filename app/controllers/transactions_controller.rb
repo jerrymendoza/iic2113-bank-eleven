@@ -19,17 +19,8 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/1/confirm_transaction
   def confirm_transaction;
-    puts "\nlos parametros son"
-    puts params
-    puts "el id es"
-    puts params[:format]
     @transaction = Transaction.find(params[:format])
-    puts "dentro de la transacción id:"
-    puts  @transaction.id
-    puts "amount"
-    puts @transaction.amount
-    puts "state"
-    puts @transaction.state
+ 
    
   end
 
@@ -53,7 +44,7 @@ class TransactionsController < ApplicationController
     if transaction_type.zero?
       origin_account = Account.find_by(id: params[:origin_account_id])
       target_account = Account.find_by(number: transaction_params[:target_account_number])
-      if !target_account.nil? 
+      if !@target_account.nil? 
         origin_transfer = make_transfer(origin_account, amount, date, 0, target_account.number,false)
         UserMailer.with(current_user: current_user).code_confirmation(current_user, origin_transfer.confirmation_code).deliver_now
         # make_deposit(target_account, amount, date, 1, origin_account.number)
@@ -104,9 +95,9 @@ class TransactionsController < ApplicationController
   def create_deposit
 
     puts "\n\nentre a create deposite\n\n"
-    puts target_account
-    puts amount
-    puts date
+    puts params
+    puts "\nfin\n"
+    #puts date
     #make_deposit(target_account, amount, date, 1, origin_account.number)
     redirect_to(user_accounts_path(current_user))
   end
