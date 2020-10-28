@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
-  root to: "index/welcome"
-  get 'transactions/new_transfer', to: 'transactions/new_transfer'
-  get 'transactions/new_saving', to: 'transactions/new_saving'
+  root to: "index#welcome"
+  get 'transactions/new_transfer', to: 'transactions#new_transfer'
+  get 'transactions/new_saving', to: 'transactions#new_saving'
   get 'api/v1/transactions/date', to: 'api/v1/transactions/date'
 
   scope path: '/api' do
