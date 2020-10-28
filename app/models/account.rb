@@ -3,14 +3,12 @@ class Account < ApplicationRecord
 
   def new_unique_number
     last_account = Account.order('number::integer DESC').first
-    puts last_account
     # Esto es asi, pq si no habia un numero, no encontraba un account
     last_number = if last_account
                     last_account.number
                   else
                     rand(1..10).to_s
                   end
-    puts last_number
     self.number = (last_number.to_i + rand(1..10)).to_s
   end
 

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
   describe "code_confirmation" do
-    let(:mail) { UserMailer.code_confirmation }
+    let(:mail) { described_class.code_confirmation }
 
     it "renders the headers" do
       expect(mail.subject).to eq("Code confirmation")
@@ -14,5 +14,4 @@ RSpec.describe UserMailer, type: :mailer do
       expect(mail.body.encoded).to match("Hi")
     end
   end
-
 end
