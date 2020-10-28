@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root to: "index#welcome"
   get 'transactions/new_transfer', to: 'transactions#new_transfer'
   get 'transactions/new_saving', to: 'transactions#new_saving'
-  get 'api/v1/transactions/date', to: 'api/v1/transactions/date'
+  get 'api/v1/transactions/date', to: 'api/v1/transactions#date'
 
   scope path: '/api' do
     api_version(module: "Api::V1", path: { value: "v1" }, defaults: { format: 'json' }) do

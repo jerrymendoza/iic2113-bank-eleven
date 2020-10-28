@@ -30,8 +30,6 @@ gem 'versionist'
 gem 'webpacker', '~> 4.0'
 gem 'sidekiq'
 gem 'sinatra', github: 'sinatra/sinatra'
-gem 'rabl'
-gem 'jwt'
 
 
 group :development do
