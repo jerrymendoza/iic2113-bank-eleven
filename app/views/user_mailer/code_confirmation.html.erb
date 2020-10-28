@@ -1,5 +1,9 @@
-<h1>User#code_confirmation</h1>
-
+<h1>Transaction - Verification Code</h1>
 <p>
-  CODE_CONFIRMATION Example
+  Hello <%= @current_user.email %>, here is your verification code:
 </p>
+<p>
+You must enter the verification code to the platform to successfully complete the transaction
+</p>
+<strong>  <%= @verification_code   %>  </strong>
+

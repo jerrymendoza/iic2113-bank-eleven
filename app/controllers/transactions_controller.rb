@@ -39,12 +39,13 @@ class TransactionsController < ApplicationController
       target_account = Account.find_by(number: transaction_params[:target_account_number])
       if !target_account.nil? && verify_code("0000", user_code)
         puts "\nel codigo esta BIEN\n"
-        UserMailer.with(user: current_user).code_confirmation().deliver_now
-       # UserMailer.code_confirmation(current_user).deliver_now
         make_transfer(origin_account, amount, date, 0, target_account.number)
         make_deposit(target_account, amount, date, 1, origin_account.number)
-        redirect_to(user_account_transactions_path(current_user, origin_account),
-                    notice: 'Transaction was successfully created.')
+        redirect_to(confirm_transaction_path())
+
+        #redirect_to(user_account_transactions_path(current_user, origin_account),
+        #            notice: 'Transaction was successfully created.')
+   
        
       else
         puts "\nel codigo esta MAL\n"
@@ -78,9 +79,8 @@ class TransactionsController < ApplicationController
   end
 
   def send_email
-    puts "\nentre al send email\n"
-    format.html { redirect_to @user, notice: 'User was successfully updated.' }
-    redirect_back(fallback_location: { action: "index" })
+    #UserMailer.with(current_user: current_user).code_confirmation(current_user).deliver_now
+    redirect_to(confirm_transaction_path())
   end
 
   # PATCH/PUT /transactions/1

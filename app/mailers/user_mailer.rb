@@ -5,7 +5,9 @@ class UserMailer < ApplicationMailer
   #
   #   en.user_mailer.code_confirmation.subject
   #
-  def code_confirmation
-    mail(to: "cotiravanal@gmail.com", subject: "Verification Code")
+  def code_confirmation(current_user)
+    @current_user = current_user
+    @verification_code = "0000"
+    mail(to: current_user.email, subject: "Verification Code")
   end
 end
