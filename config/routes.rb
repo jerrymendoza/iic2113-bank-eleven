@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'transactions/new_saving', to: 'transactions#new_saving'
   get 'transactions/send_email', to: 'transactions#send_email', as: 'transactions_send_email'
   get 'transactions/confirm_transaction', to: 'transactions#confirm_transaction', as: 'confirm_transaction'
-
+  post 'transactions/create_deposit', to: 'transactions#create_deposit', as: 'create_deposit'
   scope path: '/api' do
     api_version(module: "Api::V1", path: { value: "v1" }, defaults: { format: 'json' }) do
     end

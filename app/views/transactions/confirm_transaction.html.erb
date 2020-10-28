@@ -1,1 +1,17 @@
-<h1>coti</h1>
+<h1>Check your email</h1>
+<p>Please enter the verification code to complete the transaction: </p>
+<%= form_for @transaction, url: { action: 'create_deposit' }, html: { method: 'post' } do |form| %>
+  <div class="field">
+    <%= form.label :confirmation_code %>
+    <%= form.number_field :confirmation_code %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+
+
+
+

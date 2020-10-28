@@ -17,6 +17,22 @@ class TransactionsController < ApplicationController
 
   def new_saving; end
 
+  # GET /transactions/1/confirm_transaction
+  def confirm_transaction;
+    puts "\nlos parametros son"
+    puts params
+    puts "el id es"
+    puts params[:format]
+    @transaction = Transaction.find(params[:format])
+    puts "dentro de la transacción id:"
+    puts  @transaction.id
+    puts "amount"
+    puts @transaction.amount
+    puts "state"
+    puts @transaction.state
+   
+  end
+
   # GET /transactions/new
   def new
     @transaction = Transaction.new
@@ -37,18 +53,20 @@ class TransactionsController < ApplicationController
     if transaction_type.zero?
       origin_account = Account.find_by(id: params[:origin_account_id])
       target_account = Account.find_by(number: transaction_params[:target_account_number])
-      if !target_account.nil? && verify_code("0000", user_code)
-        puts "\nel codigo esta BIEN\n"
-        make_transfer(origin_account, amount, date, 0, target_account.number)
-        make_deposit(target_account, amount, date, 1, origin_account.number)
-        redirect_to(confirm_transaction_path())
+      if !target_account.nil? 
+        origin_transfer = make_transfer(origin_account, amount, date, 0, target_account.number,false)
+        UserMailer.with(current_user: current_user).code_confirmation(current_user, origin_transfer.confirmation_code).deliver_now
+        # make_deposit(target_account, amount, date, 1, origin_account.number)
+        puts "origin transfer"
+        puts origin_transfer
+        puts "el id es:"
+        puts origin_transfer.id
+        redirect_to(confirm_transaction_path(origin_transfer.id))
 
         #redirect_to(user_account_transactions_path(current_user, origin_account),
         #            notice: 'Transaction was successfully created.')
-   
-       
+  
       else
-        puts "\nel codigo esta MAL\n"
         redirect_back(fallback_location: { action: "index",
                                            notice: 'Error creating transaction.' })
       end
@@ -57,7 +75,7 @@ class TransactionsController < ApplicationController
     elsif transaction_type == 2
       origin_account = Account.find_by(id: params[:origin_account_id])
       target_account = Account.find_by(id: params[:target_account_id])
-      make_transfer(origin_account, amount, date, 0, target_account.number)
+      make_transfer(origin_account, amount, date, 0, target_account.number, true)
       make_deposit(target_account, amount, date, 2, origin_account.number)
       redirect_to(user_account_transactions_path(current_user, origin_account),
                   notice: 'Transaction was successfully created.')
@@ -81,6 +99,16 @@ class TransactionsController < ApplicationController
   def send_email
     #UserMailer.with(current_user: current_user).code_confirmation(current_user).deliver_now
     redirect_to(confirm_transaction_path())
+  end
+
+  def create_deposit
+
+    puts "\n\nentre a create deposite\n\n"
+    puts target_account
+    puts amount
+    puts date
+    #make_deposit(target_account, amount, date, 1, origin_account.number)
+    redirect_to(user_accounts_path(current_user))
   end
 
   # PATCH/PUT /transactions/1
@@ -121,7 +149,7 @@ class TransactionsController < ApplicationController
     @accounts = Account.where(user_id: current_user.id)
   end
 
-  def make_transfer(origin_account, amount, date, transaction_type, another_account_number)
+  def make_transfer(origin_account, amount, date, transaction_type, another_account_number, transfer_state)
     origin_account.balance -= amount
     origin_account.save
     new_confirmation_code = rand(10000..100000)
@@ -130,8 +158,10 @@ class TransactionsController < ApplicationController
                                          balance: origin_account.balance,
                                          account_id: origin_account.id,
                                          account_number: another_account_number,
-                                         state: false, confirmation_code: new_confirmation_code)
+                                         state: transfer_state, 
+                                         confirmation_code: new_confirmation_code)
     origin_transaction.save
+    return origin_transaction
   end
 
   def make_deposit(target_account, amount, date, transaction_type, another_account_number)
