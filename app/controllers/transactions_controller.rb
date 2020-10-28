@@ -39,12 +39,13 @@ class TransactionsController < ApplicationController
     transaction_type = params[:transaction_type].to_i
     amount = transaction_params[:amount].to_i
     date = DateTime.now.strftime("%d/%m/%Y %H:%M")
-    user_code = transaction_params[:confirmation_code]
+    puts "amount"
+    puts amount
     # Between other acounts
     if transaction_type.zero?
       origin_account = Account.find_by(id: params[:origin_account_id])
       target_account = Account.find_by(number: transaction_params[:target_account_number])
-      if !@target_account.nil? 
+      if !target_account.nil? 
         origin_transfer = make_transfer(origin_account, amount, date, 0, target_account.number,false)
         UserMailer.with(current_user: current_user).code_confirmation(current_user, origin_transfer.confirmation_code).deliver_now
         # make_deposit(target_account, amount, date, 1, origin_account.number)
