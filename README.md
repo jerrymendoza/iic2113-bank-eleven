@@ -35,6 +35,8 @@ La contabilidad de las cuentas es consistente luego de las transacciones, esto s
 * ### Usabilidad
 Para la usabilidad del frontend se utilizó en primer lugar una Navbar para otorgar navegabilidad por la aplicación.
 
+El informe actualizado de la Entrega1 se encuentra en docs.
+
 
 # Readme Repo Base
 
