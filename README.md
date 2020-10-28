@@ -1,4 +1,44 @@
-# Repo Base
+# Entrega 2 - Banco de Inversiones
+
+## Registro y Login de Usuarios
+Se manejó el registro y login de usuarios mediante la gema Devise.
+Al registrarse, a cada usuario se le asignan dos cuentas automaticamente: una corriente y otra de ahorro (fondo). Ambas cuentas se crean con un número de cuenta único y con un monto aleatorio entre 10.000 CLP y 100.000 CLP.
+
+## Interfaz de Usuario
+El usuario  a través de la aplicación puede registrarse, hacer login, hacer logout, ver sus cuentas y los movimintos de estas(historiales) y crear nuevas transacciones. Para ver los movimientos de cierta cuenta el usuario debe seleccionar dicha cuenta y apretar el botón 'See balances and movements'.
+
+## Transacciones
+El usuario puede realizar dos tipos de transacciones: entre sus propias cuentas o a terceros. Puede hacerlo desde la barra de navegación o desde una cuenta.
+En cada transacción el usuario debe ingresar un monto válido (mayor a 0 y mayor al balance de esta cuenta) y seleccionar una cuenta de destino existente, si no se cumple con estos requisitos la transacción no se puede realizar.  
+Se puede transferir desde la cuenta corriente al fondo (cuenta de ahorro) o viceversa.
+
+## Contabilidad Transacciones
+El historial de transacciones de cada cuenta se puede visualizar en 'See balances and movements' al seleccionar una cuenta en especifico. Este historial de transacciones muestra el balance de la cuenta luego de cada transacción - además de tipo de transacción, monto, fecha, entre otros.  
+La contabilidad de las cuentas es consistente luego de las transacciones, esto se puede visibilizar al ver dicha cuenta en específico. Su balance estará actualizado con el que se muestra en el historial.
+
+## Envío de Correos
+
+## Módulo de Inversiones
+
+## API
+
+## Buenas prácticas de desarrollo 
+* :white_check_mark: Gitflow 
+* :white_check_mark: Principios SOLID
+
+## Bonus
+
+* ### Deploy a Heroku
+
+* ### Segundo Fondo de Inversión
+
+* ### Usabilidad
+Para la usabilidad del frontend se utilizó en primer lugar una Navbar para otorgar navegabilidad por la aplicación.
+
+El informe actualizado de la Entrega1 se encuentra en docs.
+
+
+# Readme Repo Base
 
 This is a Rails application, initially generated using [Potassium](https://github.com/platanus/potassium) by Platanus.
 

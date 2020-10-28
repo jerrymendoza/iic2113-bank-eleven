@@ -28,6 +28,11 @@ gem 'strong_migrations'
 gem 'turbolinks', '~> 5'
 gem 'versionist'
 gem 'webpacker', '~> 4.0'
+gem 'sidekiq'
+gem 'sinatra', github: 'sinatra/sinatra'
+gem 'rabl'
+gem 'jwt'
+
 
 group :development do
   gem 'annotate', '~> 3.0'
