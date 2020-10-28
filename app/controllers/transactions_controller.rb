@@ -11,7 +11,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/1
   # GET /transactions/1.json
-  def show 
+  def show
     render json: @transaction
   end
 
@@ -34,33 +34,29 @@ class TransactionsController < ApplicationController
     transaction_type = params[:transaction_type].to_i
     amount = transaction_params[:amount].to_i
     date = DateTime.now.strftime("%d/%m/%Y %H:%M")
+    origin_account = Account.find_by(id: params[:origin_account_id])
+    transaction_type_origin = 0 # transfer
 
     # Between other acounts
     if transaction_type.zero?
-      origin_account = Account.find_by(id: params[:origin_account_id])
       target_account = Account.find_by(number: transaction_params[:target_account_number])
-      if !target_account.nil?
-        make_transfer(origin_account, amount, date, 0, target_account.number)
-        make_deposit(target_account, amount, date, 1, origin_account.number)
-        redirect_to(user_account_transactions_path(current_user, origin_account),
-                    notice: 'Transaction was successfully created.')
-      else
-        redirect_back(fallback_location: { action: "index",
-                                           notice: 'Error creating transaction.' })
-      end
+      transaction_type_target = 1 # deposit
 
     # Between my acounts
     elsif transaction_type == 2
-      origin_account = Account.find_by(id: params[:origin_account_id])
       target_account = Account.find_by(id: params[:target_account_id])
-      make_transfer(origin_account, amount, date, 0, target_account.number)
-      make_deposit(target_account, amount, date, 2, origin_account.number)
+      transaction_type_target = 2 # saving
+    end
+
+    if check_conditions(origin_account, target_account, amount)
+      make_transfer(origin_account, amount, date, transaction_type_origin, target_account.number)
+      make_deposit(target_account, amount, date, transaction_type_target, origin_account.number)
       redirect_to(user_account_transactions_path(current_user, origin_account),
                   notice: 'Transaction was successfully created.')
 
     else
       redirect_back(fallback_location: { action: "index",
-                                         notice: 'Error creating transaction.' })
+                                         error: 'Error creating transaction.' })
     end
 
     # respond_to do |format|
@@ -102,18 +98,31 @@ class TransactionsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_transaction
-    @transaction = Transaction.find(params[:id])
-  end
+  # def set_transaction
+  #   @transaction = Transaction.find(params[:id])
+  # end
 
   def set_new_transaction
     @transaction = Transaction.new
     @accounts = Account.where(user_id: current_user.id)
   end
 
+  def set_user_account
+    @user = User.find(params[:user_id])
+    @account = Account.find(params[:account_id])
+  end
+
+  def check_conditions(origin_account, target_account, amount)
+    condition1 = !origin_account.nil?
+    condition2 = !target_account.nil?
+    condition3 = amount >= 0
+    condition4 = condition1 && origin_account.balance >= amount
+    conditions = [condition1, condition2, condition3, condition4]
+    conditions.all?
+  end
+
   def make_transfer(origin_account, amount, date, transaction_type, another_account_number)
-    origin_account.balance -= amount
-    origin_account.save
+    origin_account.change_balance(-amount)
     new_confirmation_code = rand(10000..100000)
     origin_transaction = Transaction.new(transaction_type: transaction_type,
                                          amount: amount, date: date,
@@ -125,8 +134,7 @@ class TransactionsController < ApplicationController
   end
 
   def make_deposit(target_account, amount, date, transaction_type, another_account_number)
-    target_account.balance += amount
-    target_account.save
+    target_account.change_balance(amount)
     target_transaction = Transaction.new(transaction_type: transaction_type,
                                          amount: amount, date: date,
                                          balance: target_account.balance,
@@ -134,11 +142,6 @@ class TransactionsController < ApplicationController
                                          account_number: another_account_number,
                                          state: true)
     target_transaction.save
-  end
-
-  def set_user_account
-    @user = User.find(params[:user_id])
-    @account = Account.find(params[:account_id])
   end
 
   # Only allow a list of trusted parameters through.
