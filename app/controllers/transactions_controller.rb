@@ -4,7 +4,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   def index
-    @transactions = Transaction.all
+    @transactions = Transaction.where(state: true)
   end
 
   def new_transfer; end
@@ -36,14 +36,53 @@ class TransactionsController < ApplicationController
     end
 
     if check_conditions(origin_account, target_account, amount)
-      make_transfer(origin_account, amount, date, transaction_type_origin, target_account.number)
-      make_deposit(target_account, amount, date, transaction_type_target, origin_account.number)
-      redirect_to(user_account_transactions_path(current_user, origin_account),
-                  notice: 'Transaction was successfully created.')
-
+      origin_transaction = make_transfer(origin_account, amount, date, transaction_type_origin,
+                                         target_account.number, false)
+      target_transaction = make_deposit(target_account, amount, date, transaction_type_target,
+                                        origin_account.number, false)
+      UserMailer.code_confirmation(current_user, origin_transaction.confirmation_code).deliver_now
+      redirect_to(confirm_transaction_path(origin_transaction.id, target_transaction.id))
     else
       redirect_back(fallback_location: { action: "index",
                                          error: 'Error creating transaction.' })
+    end
+  end
+
+  # GET /transactions/1/confirm_transaction
+  def confirm_transaction
+    @origin_transaction = Transaction.find(params[:id])
+    @target_transaction = Transaction.find(params[:format])
+  end
+
+  def create_deposit
+    @origin_transaction = Transaction.find(params[:origin_transaction_id])
+    @target_transaction = Transaction.find(params[:target_transaction_id])
+    confirmation_code_user = params.require(:post).permit(:confirmation_code_user)
+    confirmation_code_user = confirmation_code_user[:confirmation_code_user]
+    if verify_code(@origin_transaction.confirmation_code, confirmation_code_user)
+      changestate(@origin_transaction, @target_transaction)
+
+    else
+      redirect_back(fallback_location: { action: "index",
+                                         notice: 'Error creating transaction.' })
+    end
+  end
+
+  def changestate(origin_transaction, target_transaction)
+    origin_transaction.state = true
+    target_transaction.state = true
+    origin_account = Account.find_by(id: origin_transaction.account_id)
+    origin_account.change_balance(-origin_transaction.amount)
+    origin_transaction.balance = origin_account.balance
+    target_account = Account.find_by(id: target_transaction.account_id)
+    target_account.change_balance(target_transaction.amount)
+    target_transaction.balance = target_account.balance
+    if origin_transaction.save && target_transaction.save
+      redirect_to(user_account_transactions_path(current_user,  origin_account),
+                  notice: 'Transaction was successfully created.')
+    else
+      redirect_back(fallback_location: { action: "index",
+                                         notice: 'Error creating transaction.' })
     end
   end
 
@@ -68,27 +107,28 @@ class TransactionsController < ApplicationController
     conditions.all?
   end
 
-  def make_transfer(origin_account, amount, date, transaction_type, another_account_number)
-    origin_account.change_balance(-amount)
+  def make_transfer(origin_account, amount, date, transaction_type, another_account_number,
+    transfer_state)
     new_confirmation_code = rand(10000..100000)
     origin_transaction = Transaction.new(transaction_type: transaction_type,
                                          amount: amount, date: date,
-                                         balance: origin_account.balance,
                                          account_id: origin_account.id,
                                          account_number: another_account_number,
-                                         state: false, confirmation_code: new_confirmation_code)
+                                         state: transfer_state,
+                                         confirmation_code: new_confirmation_code)
     origin_transaction.save
+    origin_transaction
   end
 
-  def make_deposit(target_account, amount, date, transaction_type, another_account_number)
-    target_account.change_balance(amount)
+  def make_deposit(target_account, amount, date, transaction_type, another_account_number,
+    transfer_state)
     target_transaction = Transaction.new(transaction_type: transaction_type,
                                          amount: amount, date: date,
-                                         balance: target_account.balance,
                                          account_id: target_account.id,
                                          account_number: another_account_number,
-                                         state: true)
+                                         state: transfer_state)
     target_transaction.save
+    target_transaction
   end
 
   # Only allow a list of trusted parameters through.
@@ -96,5 +136,13 @@ class TransactionsController < ApplicationController
     params.require(:transaction).permit(:amount, :date, :transaction_type, :balance,
                                         :state, :account_id, :confirmation_code,
                                         :target_account_number, :origin_account_number)
+  end
+
+  def verify_code(original_code, user_code)
+    if original_code.to_i == user_code.to_i
+      return true
+    end
+
+    false
   end
 end

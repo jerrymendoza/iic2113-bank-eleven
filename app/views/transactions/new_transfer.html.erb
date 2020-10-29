@@ -1,3 +1,4 @@
+<h3>Transfer to other user</h3>
 <%= form_with(model: @transaction, local: true) do |form| %>
   <% if @transaction.errors.any? %>
     <div id="error_explanation">
@@ -29,6 +30,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Request Verification Code" %>
   </div>
 <% end %>

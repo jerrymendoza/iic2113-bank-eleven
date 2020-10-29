@@ -221,7 +221,7 @@ Metrics/AbcSize:
     A calculated magnitude based on number of assignments, branches, and
     conditions.
   Enabled: true
-  Max: 25
+  Max: 35
 Metrics/BlockNesting:
   Description: Avoid excessive block nesting
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#three-is-the-number-thou-shalt-count
@@ -237,7 +237,7 @@ Metrics/MethodLength:
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#short-methods
   Enabled: true
   CountComments: true
-  Max: 15
+  Max: 25
   Exclude:
     - "spec/**/*"
 Metrics/ParameterLists:
@@ -251,6 +251,9 @@ Lint/AssignmentInCondition:
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#safe-assignment-in-condition
   Enabled: false
   AllowSafeAssignment: true
+Lint/UselessAssignment:
+  Exclude:
+    - 'app/controllers/index_controller.rb'
 Layout/LineLength:
   Description: Limit lines to 100 characters.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#100-character-limits
@@ -509,12 +512,15 @@ Lint/StructNewOverride:
 Rails/Delegate:
   Description: Prefer delegate method for delegations.
   Enabled: false
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - app/controllers/accounts_controller.rb
 Performance/RedundantBlockCall:
   Description: Use `yield` instead of `block.call`.
   Reference: https://github.com/JuanitoFatas/fast-ruby#proccall-vs-yield-code
   Enabled: false
 RSpec/MultipleExpectations:
-  Max: 5
+  Max: 6
 RSpec/NestedGroups:
   Max: 5
 RSpec/ExampleLength:
@@ -524,3 +530,6 @@ RSpec/LetSetup:
 RSpec/ExpectChange:
   Enabled: true
   EnforcedStyle: block
+RSpec/InstanceVariable:
+  Exclude:
+    - 'spec/views/**/*'
