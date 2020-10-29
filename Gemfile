@@ -6,6 +6,7 @@ gem 'activeadmin', '~> 2.6'
 gem 'activeadmin_addons'
 gem 'aws-sdk-s3', '~> 1.0'
 gem 'bootsnap', require: false
+gem 'bootstrap-sass'
 gem 'data_migrate'
 gem 'devise'
 gem 'devise-i18n'
