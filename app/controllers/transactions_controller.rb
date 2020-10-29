@@ -29,14 +29,6 @@ class TransactionsController < ApplicationController
     if transaction_type.zero?
       target_account = Account.find_by(number: transaction_params[:target_account_number])
       transaction_type_target = 1 # deposit
-
-        # redirect_to(user_account_transactions_path(current_user, origin_account),
-        #            notice: 'Transaction was successfully created.')
-      # if !target_account.nil?
-      #   origin_transaction = make_transfer(origin_account, amount, date, 0,
-      #                                      target_account.number, false)
-      #   target_transaction = make_deposit(target_account, amount, date, 1,
-      #                                     origin_account.number, false)
          
     # Between my acounts
     elsif transaction_type == 2
@@ -47,13 +39,8 @@ class TransactionsController < ApplicationController
     if check_conditions(origin_account, target_account, amount)
       origin_transaction = make_transfer(origin_account, amount, date, transaction_type_origin, target_account.number, false)
       target_transaction = make_deposit(target_account, amount, date, transaction_type_target, origin_account.number, false)
-      UserMailer.code_confirmation(current_user,
-                                     origin_transaction.confirmation_code).deliver_now
-        # make_deposit(target_account, amount, date, 1, origin_account.number)
+      UserMailer.code_confirmation(current_user, origin_transaction.confirmation_code).deliver_now
       redirect_to(confirm_transaction_path(origin_transaction.id, target_transaction.id))
-      # redirect_to(user_account_transactions_path(current_user, origin_account),
-      #             notice: 'Transaction was successfully created.')
-
     else
       redirect_back(fallback_location: { action: "index",
                                          error: 'Error creating transaction.' })
@@ -102,30 +89,6 @@ class TransactionsController < ApplicationController
                                          notice: 'Error creating transaction.' })
     end
   end
-  # PATCH/PUT /transactions/1
-  # PATCH/PUT /transactions/1.json
-  # def update
-  #   respond_to do |format|
-  #     if @transaction.update(transaction_params)
-  #       format.html { redirect_to @transaction, notice: 'Transaction was successfully updated.' }
-  #       format.json { render :show, status: :ok, location: @transaction }
-  #     else
-  #       format.html { render :edit }
-  #       format.json { render json: @transaction.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
-  # # DELETE /transactions/1
-  # # DELETE /transactions/1.json
-  # def destroy
-  #   @transaction.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to transactions_url,
-  #                   notice: 'Transaction was successfully destroyed.' }
-  #     format.json { head :no_content }
-  #   end
-  # end
 
   private
 
@@ -149,11 +112,9 @@ class TransactionsController < ApplicationController
   end
 
   def make_transfer(origin_account, amount, date, transaction_type, another_account_number, transfer_state)
-    # origin_account.change_balance(-amount)
     new_confirmation_code = rand(10000..100000)
     origin_transaction = Transaction.new(transaction_type: transaction_type,
                                          amount: amount, date: date,
-                                         #balance: origin_account.balance,
                                          account_id: origin_account.id,
                                          account_number: another_account_number,
                                          state: transfer_state,
@@ -163,10 +124,8 @@ class TransactionsController < ApplicationController
   end
 
   def make_deposit(target_account, amount, date, transaction_type, another_account_number, transfer_state)
-    #target_account.change_balance(amount)
     target_transaction = Transaction.new(transaction_type: transaction_type,
                                          amount: amount, date: date,
-                                         #balance: target_account.balance,
                                          account_id: target_account.id,
                                          account_number: another_account_number,
                                          state: transfer_state)

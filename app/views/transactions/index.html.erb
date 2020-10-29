@@ -5,12 +5,10 @@
 <table>
   <thead>
     <tr>
-      <th>Amount</th>
-      <th>Date</th>
       <th>Transaction type</th>
+      <th>Date</th>
+      <th>Amount</th>
       <th>Balance</th>
-      <th>State</th>
-      <th>Confirmation code</th>
       <th>From</th>
       <th>To</th>
       <th colspan="3"></th>
@@ -21,12 +19,10 @@
     <% @transactions.each do |transaction| %>
       <% if transaction.account_id == @account.id && @user.id == current_user.id%>
         <tr>
-          <td><%= transaction.amount %></td>
+          <td><%= transaction.transaction_type.capitalize %></td>
           <td><%= transaction.date %></td>
-          <td><%= transaction.transaction_type %></td>
+          <td><%= transaction.amount %></td>
           <td><%= transaction.balance %></td>
-          <td><%= transaction.state %></td>
-          <td><%= transaction.confirmation_code %></td>
           <% if (transaction.deposit? || transaction.saving?)  %>
           <td> <%= transaction.account_number %></td> 
           <% else %>
