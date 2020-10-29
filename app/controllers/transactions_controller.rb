@@ -11,7 +11,6 @@ class TransactionsController < ApplicationController
 
   def new_saving; end
 
-
   # GET /transactions/new
   def new
     @transaction = Transaction.new
@@ -29,7 +28,7 @@ class TransactionsController < ApplicationController
     if transaction_type.zero?
       target_account = Account.find_by(number: transaction_params[:target_account_number])
       transaction_type_target = 1 # deposit
-         
+
     # Between my acounts
     elsif transaction_type == 2
       target_account = Account.find_by(id: params[:target_account_id])
@@ -37,8 +36,10 @@ class TransactionsController < ApplicationController
     end
 
     if check_conditions(origin_account, target_account, amount)
-      origin_transaction = make_transfer(origin_account, amount, date, transaction_type_origin, target_account.number, false)
-      target_transaction = make_deposit(target_account, amount, date, transaction_type_target, origin_account.number, false)
+      origin_transaction = make_transfer(origin_account, amount, date, transaction_type_origin,
+                                         target_account.number, false)
+      target_transaction = make_deposit(target_account, amount, date, transaction_type_target,
+                                        origin_account.number, false)
       UserMailer.code_confirmation(current_user, origin_transaction.confirmation_code).deliver_now
       redirect_to(confirm_transaction_path(origin_transaction.id, target_transaction.id))
     else
@@ -51,11 +52,6 @@ class TransactionsController < ApplicationController
   def confirm_transaction
     @origin_transaction = Transaction.find(params[:id])
     @target_transaction = Transaction.find(params[:format])
-  end
-
-  def send_email
-    # UserMailer.with(current_user: current_user).code_confirmation(current_user).deliver_now
-    redirect_to(confirm_transaction_path)
   end
 
   def create_deposit
@@ -111,7 +107,8 @@ class TransactionsController < ApplicationController
     conditions.all?
   end
 
-  def make_transfer(origin_account, amount, date, transaction_type, another_account_number, transfer_state)
+  def make_transfer(origin_account, amount, date, transaction_type, another_account_number,
+    transfer_state)
     new_confirmation_code = rand(10000..100000)
     origin_transaction = Transaction.new(transaction_type: transaction_type,
                                          amount: amount, date: date,
@@ -123,7 +120,8 @@ class TransactionsController < ApplicationController
     origin_transaction
   end
 
-  def make_deposit(target_account, amount, date, transaction_type, another_account_number, transfer_state)
+  def make_deposit(target_account, amount, date, transaction_type, another_account_number,
+    transfer_state)
     target_transaction = Transaction.new(transaction_type: transaction_type,
                                          amount: amount, date: date,
                                          account_id: target_account.id,

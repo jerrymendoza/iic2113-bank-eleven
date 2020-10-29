@@ -23,14 +23,13 @@ gem 'rails-i18n'
 gem 'responders'
 gem 'sass-rails', '>= 6'
 gem 'sentry-raven'
+gem 'sidekiq'
 gem 'simple_token_authentication', '~> 1.0'
+gem 'sinatra', github: 'sinatra/sinatra'
 gem 'strong_migrations'
 gem 'turbolinks', '~> 5'
 gem 'versionist'
 gem 'webpacker', '~> 4.0'
-gem 'sidekiq'
-gem 'sinatra', github: 'sinatra/sinatra'
-
 
 group :development do
   gem 'annotate', '~> 3.0'

@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   root to: "index#welcome"
   get 'transactions/new_transfer', to: 'transactions#new_transfer'
   get 'transactions/new_saving', to: 'transactions#new_saving'
-  get 'transactions/send_email', to: 'transactions#send_email', as: 'transactions_send_email'
-  get 'transactions/:id/confirm_transaction', to: 'transactions#confirm_transaction', as: 'confirm_transaction'
+  get 'transactions/:id/confirm_transaction', to: 'transactions#confirm_transaction',
+                                              as: 'confirm_transaction'
   post 'transactions/create_deposit', to: 'transactions#create_deposit', as: 'create_deposit'
   get 'api/v1/transactions/date', to: 'api/v1/transactions#date'
 
