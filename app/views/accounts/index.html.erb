@@ -1,8 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Accounts of <%=@user.email%></h1>
 
-<table>
+<div class="container">
+<h3>Accounts of <%=@user.email%></h3>
+<table  class="table table-bordered">
   <thead>
     <tr>
       <th>Number</th>
@@ -20,11 +21,13 @@
         <td><%= account.balance %></td>
         <td><%= account.account_type %></td>
         <td><%= account.user.email %></td>
-        <td><%= link_to 'Show', [@user, account] %></td>
+        <td><%= link_to "Show Movements", user_account_transactions_path(current_user ,account) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
+
+</div>
+
 

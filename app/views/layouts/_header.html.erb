@@ -1,14 +1,13 @@
 <html>
 <header>
  <% if user_signed_in? %>
-<div class="navbar navbar-light" style="background-color: #e3f2fd;">
+<div class="navbar navbar-light" style="background-color: #c4dcfc;">
   <div class="left-nav">
     <ul>
       <li><%= link_to "Home", root_path %></li>
       <li><%= link_to "Accounts", user_accounts_path(current_user) %></li>
       <li> <%= link_to 'Make a Transaction', new_transaction_path %></li>
       <li> <%= link_to "Access to token", api_token_user_path(current_user)%> </li>
-
     </ul>
 </div>
 
