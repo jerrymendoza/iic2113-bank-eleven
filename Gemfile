@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby "2.7.0"
 
 gem 'active_model_serializers', '~> 0.9.3'
 gem 'active_skin', github: 'SoftwareBrothers/active_skin'
@@ -31,6 +32,8 @@ gem 'strong_migrations'
 gem 'turbolinks', '~> 5'
 gem 'versionist'
 gem 'webpacker', '~> 4.0'
+gem 'sidekiq', '~> 4.1.4'
+gem 'sinatra', github: 'sinatra/sinatra'
 
 group :development do
   gem 'annotate', '~> 3.0'
