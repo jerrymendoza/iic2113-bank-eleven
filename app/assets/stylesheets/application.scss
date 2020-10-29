@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+ @import 'bootstrap/scss/bootstrap';
+ .full-body {
+    min-height: 100%;
+    padding: 10px;
+  }
+  
