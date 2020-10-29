@@ -1,29 +1,26 @@
 <html>
 <header>
-
+ <% if user_signed_in? %>
 <div class="navbar navbar-light" style="background-color: #e3f2fd;">
   <div class="left-nav">
     <ul>
-    <% if user_signed_in? %>
       <li><%= link_to "Home", root_path %></li>
       <li><%= link_to "Accounts", user_accounts_path(current_user) %></li>
       <li> <%= link_to 'Make a Transaction', new_transaction_path %></li>
       <li> <%= link_to "Access to token", api_token_user_path(current_user)%> </li>
-    <% end %>
+
     </ul>
 </div>
 
   <div class="right-nav">
-   
-    <% if user_signed_in? %>
      <ul>
       <div class="user_logout">
           <li> <%= link_to 'Sign out', destroy_user_session_path, method: :delete %> </li>
        </div>
-         </ul>
-    <% end %>
+      </ul>
   
     </div>
   </div>
+    <% end %>
 </header>
 </html>

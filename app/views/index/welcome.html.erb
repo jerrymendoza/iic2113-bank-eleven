@@ -1,32 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Accounts of <%=current_user.email%></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Number</th>
-      <th>Balance</th>
-      <th>Account type</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-  <% if user_signed_in? %>
+<div >
+  <h3>Accounts of <%=current_user.email%></h3>
+    <% if user_signed_in? %>
+    <div class="row">
     <% current_user.accounts.each do |account| %>
-      <tr>
-        <td><%= account.number %></td>
-        <td><%= account.balance %></td>
-        <td><%= account.account_type %></td>
-        <td><%= account.user.email %></td>
-        <td><%= link_to 'Show', [current_user, account] %></td>
-      </tr>
+  
+          <div class="col-lg p-3 m-3" style="background-color: #c4dcfc;">
+              <h3 class="text-black"><%= account.account_type%> account</h3>
+                 <p>Account Number: <%= account.number%> </p>
+                 <p>Balance: <%= account.balance%> </p>
+                <td><%= link_to 'Show', [current_user, account] %></td>
+          </div>
+     
+     <% end %>
+     </div>
     <% end %>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+</div>
 
