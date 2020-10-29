@@ -3,9 +3,9 @@ class IndexController < ApplicationController
 
   def welcome; end
 
-  private 
+  private
 
-  def add_inversion 
-    yes ||= BankInversionWorker.perform_async()
+  def add_inversion
+    yes ||= BankInversionWorker.perform_async
   end
 end
