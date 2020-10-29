@@ -11,7 +11,8 @@
       <th>Balance</th>
       <th>State</th>
       <th>Confirmation code</th>
-      <th>Account</th>
+      <th>From</th>
+      <th>To</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -26,7 +27,17 @@
           <td><%= transaction.balance %></td>
           <td><%= transaction.state %></td>
           <td><%= transaction.confirmation_code %></td>
-          <td><%= transaction.account_number %></td>
+          <% if (transaction.deposit? || transaction.saving?)  %>
+          <td> <%= transaction.account_number %></td> 
+          <% else %>
+          <td> </td>
+          <% end %>
+          <% if transaction.transfer? %>
+          <td> <%= transaction.account_number %></td> 
+          <% else %>
+          <td> </td>
+          <% end %>
+    
         </tr>
       <% end %>
     <% end %>

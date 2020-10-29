@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   before_action :get_user
-  before_action :set_account, only: [:show]
+  before_action :set_account, only: [:show, :change_balance]
 
   # GET /accounts
   # GET /accounts.json

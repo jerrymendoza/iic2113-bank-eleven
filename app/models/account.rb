@@ -15,6 +15,11 @@ class Account < ApplicationRecord
   enum account_type: { current: 0, saving: 1 }
   belongs_to :user, dependent: :delete
   has_many :transactions, dependent: :destroy
+
+  def change_balance(amount)
+    self.balance += amount
+    save
+  end
 end
 
 # == Schema Information

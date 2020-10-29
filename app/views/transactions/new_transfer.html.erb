@@ -15,7 +15,7 @@
 
   <div class="field">
     <%= form.label(:amount) %>
-    <%= form.number_field(:amount, min: 0) %>
+    <%= form.number_field(:amount, min: 0, :required => 'required') %>
   </div>
 
   <div class="field">
@@ -25,7 +25,7 @@
 
   <div class="field">
     <%= form.label("Reciever account") %>
-    <%= form.number_field(:target_account_number) %>
+    <%= form.number_field(:target_account_number, :required => 'required') %>
   </div>
 
   <div class="actions">
