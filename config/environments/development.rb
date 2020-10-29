@@ -38,5 +38,5 @@ Rails.application.configure do
     password: ENV["GMAIL_PASSWORD"]
   }
 
-  config.action_mailer.default_url_options = { url: ENV["REDISTOGO_URL"] }
+  config.action_mailer.default_url_options = { :host => 'bankeleven.herokuapp.com' }
 end
