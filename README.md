@@ -30,9 +30,10 @@ La api es una interfaz para permitir a los usuarios acceder a cierta informació
      https://bankeleven.herokuapp.com/api/v1/transactions/?api_token={}
 
 - En esta url se obtiene todo el historial de transacciones. Se debe reemplazar {} por el token de usuario 
+
 &nbsp;
 
-      https://bankeleven.herokuapp.com/api/v1/transactions/date/?api_token={}&from={}&to={}
+    https://bankeleven.herokuapp.com/api/v1/transactions/date/?api_token={}&from={}&to={}
     
 - En esta url se obtiene todo el historial de transacciones dentro de cierto intervalo de tiempo. Los parametros son: 
     * api_token: token del usuario
