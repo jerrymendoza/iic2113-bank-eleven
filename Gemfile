@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.7.0"
+ruby '~> 2.7.0'
 
 gem 'active_model_serializers', '~> 0.9.3'
 gem 'active_skin', github: 'SoftwareBrothers/active_skin'
@@ -25,13 +25,13 @@ gem 'rails-i18n'
 gem 'responders'
 gem 'sass-rails', '>= 6'
 gem 'sentry-raven'
+gem 'sidekiq', '~> 4.1.4'
 gem 'simple_token_authentication', '~> 1.0'
+gem 'sinatra', github: 'sinatra/sinatra'
 gem 'strong_migrations'
 gem 'turbolinks', '~> 5'
 gem 'versionist'
 gem 'webpacker', '~> 4.0'
-gem 'sidekiq', '~> 4.1.4'
-gem 'sinatra', github: 'sinatra/sinatra'
 
 group :development do
   gem 'annotate', '~> 3.0'
