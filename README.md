@@ -1,5 +1,24 @@
 # Entrega 2 - Banco de Inversiones
 
+## Ejecución en local
+1. Clonar el respositorio
+2. Asignar las variables de entorno descritas en la sección 'variables de entorno'
+3. Ejecutar el comando: ./bin/setup
+(se asume que se tiene Ruby, Node.js y make. Además de tener Docker corriendo)
+4. Ejecutar el comando: rails s
+
+## Ejecución en producción
+
+## Variables de entorno
+
+En el archivo .env.development agregar:
+
+GMAIL_USERNAME = "bankeleven2020@gmail.com"
+
+GMAIL_PASSWORD = "grupobank"
+
+
+
 ## Registro y Login de Usuarios
 Se manejó el registro y login de usuarios mediante la gema Devise.
 Al registrarse, a cada usuario se le asignan dos cuentas automaticamente: una corriente y otra de ahorro (fondo). Ambas cuentas se crean con un número de cuenta único y con un monto aleatorio entre 10.000 CLP y 100.000 CLP.
@@ -18,6 +37,7 @@ La contabilidad de las cuentas es consistente luego de las transacciones, esto s
 
 ## Envío de Correos
 El envio de correo se ejecuta al momento de querer realizar una transacción, ya sea a terceros o a la cuenta te ahorros. Se separa en dos vistas, en la primera se ingresan los datos de la tranferencia (monto, cuenta destinatario), al momento de apretar el botón 'Request Verification Code' se le envía un mail al usuario con el código de verificación que debe ingresar en la segunda vista existente. El movimiento de dinero solo va a ser realizado una vez que se haya ingresado el código de verifiación con éxito. 
+
 El envio de correo se hace con ActionMailer, se necesitan varibles de entorno en el archivo .env.development para que pueda ser ejecutado correctamente. Las variables de entorno necesarias están son descritas en este documento en la sección 'Variables de entorno'
 
 
@@ -47,24 +67,22 @@ La api es una interfaz para permitir a los usuarios acceder a cierta informació
 
 ## Buenas prácticas de desarrollo 
 * :white_check_mark: Gitflow 
-* :white_check_mark: Principios SOLID
+* :white_check_mark: Principios fundamentales, SOLID, CLEAN.
 
-## Bonus
+## Bonus implementados
 
-* ### Deploy a Heroku
+### Deploy a Heroku
 
-* ### Segundo Fondo de Inversión
+### Usabilidad
+* Para facilitar la usabilidad del frontend se utilizó en primer lugar una Navbar para otorgar navegabilidad por la aplicación. 
+* Se le agregó estilo a las vistas usando bootstrap y css. Se puede ver reflejado en los forms, tablas, navbar, botones, links, formato de letra, entre otros.
+* El flujo de la aplicación es simple e intuitivo para facilitar la navegación del usuario.
 
-* ### Usabilidad
-Para la usabilidad del frontend se utilizó en primer lugar una Navbar para otorgar navegabilidad por la aplicación.
 
+
+## Entregables
 El informe actualizado de la Entrega1 se encuentra en docs.
 
-## Variables de entorno
-
-En el archivo .env.development agregar:
-GMAIL_USERNAME = "bankeleven2020@gmail.com"
-GMAIL_PASSWORD = "grupobank"
 
 
 # Readme Repo Base
