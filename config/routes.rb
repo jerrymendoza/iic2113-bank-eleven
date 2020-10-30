@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :users, controllers: { registrations: "users/registrations" }
+  devise_for :users, controllers: { registrations: "users/registrations", sessions: "users/sessions" }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :users do
     member do
