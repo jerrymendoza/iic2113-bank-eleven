@@ -1,0 +1,17 @@
+.session-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  max-width: 75%;
+  padding-left: 25%;
+  padding-top: 10px;
+}
+
+.registration-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 75%;
+  padding-left: 25%;
+  padding-top: 10px;
+}

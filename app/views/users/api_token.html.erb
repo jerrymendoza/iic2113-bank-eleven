@@ -1,3 +1,22 @@
 
 <h3>Access Token</h3>
 <p>Your token is: <%= @user.api_token %> </p>
+
+<h4>How to use the API</h4>
+<h5>Show all transactions</h5>
+<ul>
+<li>Request url: <p class="fake_link">https://bankeleven.herokuapp.com/api/v1/transactions/</p></li>
+<li>url params: api_token: User token</li>
+<li>example: <p class="fake_link">https://bankeleven.herokuapp.com/api/v1/transactions/?api_token={}</p></li>
+</ul>
+
+<h5>Show all transactions between dates</h5>
+<ul>
+<li>Request url: <p class="fake_link">https://bankeleven.herokuapp.com/api/v1/transactions/date/</p></li>
+<li>url params: <ul> <li>api_token: User token</li>
+                     <li>from: Date where the period starts</li>
+                     <li>end: Date where the period ends</li>
+                </ul>
+</li>
+<li>example: <p class="fake_link">https://bankeleven.herokuapp.com/api/v1/transactions/date/?api_token={}&from={}&to={}</p></li>
+</ul>

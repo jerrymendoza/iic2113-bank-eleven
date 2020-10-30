@@ -7,7 +7,7 @@
     <div class="row">
     <% current_user.accounts.each do |account| %>
   
-          <div class="col-lg p-3 m-3" style= "background-color: #cee2fd;">
+          <div class="col-lg p-3 m-3" id="account">
               <h3 class="text-black"><%= account.account_type%> account</h3>
                  <p>Account Number: <%= account.number%> </p>
                  <p>Balance: <%= account.balance%> </p>
