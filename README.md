@@ -5,7 +5,7 @@ Se manejó el registro y login de usuarios mediante la gema Devise.
 Al registrarse, a cada usuario se le asignan dos cuentas automaticamente: una corriente y otra de ahorro (fondo). Ambas cuentas se crean con un número de cuenta único y con un monto aleatorio entre 10.000 CLP y 100.000 CLP.
 
 ## Interfaz de Usuario
-El usuario  a través de la aplicación puede registrarse, hacer login, hacer logout, ver sus cuentas y los movimintos de estas(historiales) y crear nuevas transacciones. Para ver los movimientos de cierta cuenta el usuario debe seleccionar dicha cuenta y apretar el botón 'See balances and movements'.
+El usuario  a través de la aplicación puede registrarse, hacer login, hacer logout, ver sus cuentas y los movimintos de estas(historiales) y crear nuevas transacciones. Para ver los movimientos de cierta cuenta el usuario debe seleccionar dicha cuenta y apretar el botón 'Show Movements'.
 
 ## Transacciones
 El usuario puede realizar dos tipos de transacciones: entre sus propias cuentas o a terceros. Puede hacerlo desde la barra de navegación o desde una cuenta.
@@ -13,10 +13,13 @@ En cada transacción el usuario debe ingresar un monto válido (mayor a 0 y mayo
 Se puede transferir desde la cuenta corriente al fondo (cuenta de ahorro) o viceversa.
 
 ## Contabilidad Transacciones
-El historial de transacciones de cada cuenta se puede visualizar en 'See balances and movements' al seleccionar una cuenta en especifico. Este historial de transacciones muestra el balance de la cuenta luego de cada transacción - además de tipo de transacción, monto, fecha, entre otros.  
+El historial de transacciones de cada cuenta se puede visualizar en 'Show Movements' al seleccionar una cuenta en especifico. Este historial de transacciones muestra el balance de la cuenta luego de cada transacción - además de tipo de transacción, monto, fecha, entre otros.  
 La contabilidad de las cuentas es consistente luego de las transacciones, esto se puede visibilizar al ver dicha cuenta en específico. Su balance estará actualizado con el que se muestra en el historial.
 
 ## Envío de Correos
+El envio de correo se ejecuta al momento de querer realizar una transacción, ya sea a terceros o a la cuenta te ahorros. Se separa en dos vistas, en la primera se ingresan los datos de la tranferencia (monto, cuenta destinatario), al momento de apretar el botón 'Request Verification Code' se le envía un mail al usuario con el código de verificación que debe ingresar en la segunda vista existente. El movimiento de dinero solo va a ser realizado una vez que se haya ingresado el código de verifiación con éxito. 
+El envio de correo se hace con ActionMailer, se necesitan varibles de entorno en el archivo .env.development para que pueda ser ejecutado correctamente. Las variables de entorno necesarias están son descritas en este documento en la sección 'Variables de entorno'
+
 
 ## Módulo de Inversiones
 
@@ -36,6 +39,12 @@ La contabilidad de las cuentas es consistente luego de las transacciones, esto s
 Para la usabilidad del frontend se utilizó en primer lugar una Navbar para otorgar navegabilidad por la aplicación.
 
 El informe actualizado de la Entrega1 se encuentra en docs.
+
+## Variables de entorno
+
+En el archivo .env.development agregar:
+GMAIL_USERNAME = "bankeleven2020@gmail.com"
+GMAIL_PASSWORD = "grupobank"
 
 
 # Readme Repo Base
