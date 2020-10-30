@@ -20,26 +20,34 @@ GMAIL_PASSWORD = "grupobank"
 
 
 ## Registro y Login de Usuarios
+
 Se manejó el registro y login de usuarios mediante la gema Devise.
-Al registrarse, a cada usuario se le asignan dos cuentas automaticamente: una corriente y otra de ahorro (fondo). Ambas cuentas se crean con un número de cuenta único y con un monto aleatorio entre 10.000 CLP y 100.000 CLP.
+Al registrarse, a cada usuario se le asignan dos cuentas automaticamente: una corriente y otra de ahorro (fondo). Ambas cuentas se crean con un número de cuenta único y con un monto aleatorio entre 10.000 CLP y 100.000 CLP. Al crear las cuentas, la funcion new_unique_number, se encarga de asignar un numero unico aleatorio al numero de cuentas, asegurandose, que los numero sean unicos y no conitnuos (para agregar seguridad a las cuentas).
 
 ## Interfaz de Usuario
-El usuario  a través de la aplicación puede registrarse, hacer login, hacer logout, ver sus cuentas y los movimintos de estas(historiales) y crear nuevas transacciones. Para ver los movimientos de cierta cuenta el usuario debe seleccionar dicha cuenta y apretar el botón 'Show Movements'.
+
+El usuario a través de la aplicación puede registrarse, hacer login, hacer logout, ver sus cuentas y los movimintos de estas(historiales) y crear nuevas transacciones. Para ver los movimientos de cierta cuenta el usuario debe seleccionar dicha cuenta y apretar el botón 'Show Movements'.
 
 ## Transacciones
+
 El usuario puede realizar dos tipos de transacciones: entre sus propias cuentas o a terceros. Puede hacerlo desde la barra de navegación o desde una cuenta.
 En cada transacción el usuario debe ingresar un monto válido (mayor a 0 y mayor al balance de esta cuenta) y seleccionar una cuenta de destino existente, si no se cumple con estos requisitos la transacción no se puede realizar.  
 Se puede transferir desde la cuenta corriente al fondo (cuenta de ahorro) o viceversa.
 
 ## Contabilidad Transacciones
+
 El historial de transacciones de cada cuenta se puede visualizar en 'Show Movements' al seleccionar una cuenta en especifico. Este historial de transacciones muestra el balance de la cuenta luego de cada transacción - además de tipo de transacción, monto, fecha, entre otros.  
 La contabilidad de las cuentas es consistente luego de las transacciones, esto se puede visibilizar al ver dicha cuenta en específico. Su balance estará actualizado con el que se muestra en el historial.
 
 ## Envío de Correos
+
 El envio de correo se ejecuta al momento de querer realizar una transacción, ya sea a terceros o a la cuenta te ahorros. Se separa en dos vistas, en la primera se ingresan los datos de la tranferencia (monto, cuenta destinatario), al momento de apretar el botón 'Request Verification Code' se le envía un mail al usuario con el código de verificación que debe ingresar en la segunda vista existente. El movimiento de dinero solo va a ser realizado una vez que se haya ingresado el código de verifiación con éxito. 
 
 El envio de correo se hace con ActionMailer, se necesitan varibles de entorno en el archivo .env.development para que pueda ser ejecutado correctamente. Las variables de entorno necesarias están son descritas en este documento en la sección 'Variables de entorno'
 
+
+El envio de correo se ejecuta al momento de querer realizar una transacción, ya sea a terceros o a la cuenta te ahorros. Se separa en dos vistas, en la primera se ingresan los datos de la tranferencia (monto, cuenta destinatario), al momento de apretar el botón 'Request Verification Code' se le envía un mail al usuario con el código de verificación que debe ingresar en la segunda vista existente. El movimiento de dinero solo va a ser realizado una vez que se haya ingresado el código de verifiación con éxito.
+El envio de correo se hace con ActionMailer, se necesitan varibles de entorno en el archivo .env.development para que pueda ser ejecutado correctamente. Las variables de entorno necesarias están son descritas en este documento en la sección 'Variables de entorno'
 
 ## Módulo de Inversiones
 
@@ -49,27 +57,33 @@ La api es una interfaz para permitir a los usuarios acceder a cierta informació
 
      https://bankeleven.herokuapp.com/api/v1/transactions/?api_token={}
 
-- En esta url se obtiene todo el historial de transacciones. Se debe reemplazar {} por el token de usuario 
+- En esta url se obtiene todo el historial de transacciones. Se debe reemplazar {} por el token de usuario
 
 &nbsp;
 
     https://bankeleven.herokuapp.com/api/v1/transactions/date/?api_token={}&from={}&to={}
-    
-- En esta url se obtiene todo el historial de transacciones dentro de cierto intervalo de tiempo. Los parametros son: 
-    * api_token: token del usuario
-    * from: fecha que se quiere que parta el intervalo
-    * to: fecha que se quiere que termine el intervalo
--   Para las fechas, se permite cualquier string que ruby pueda transformar a fecha. Un ejemplo sería: AAAA-MM-DDTHH:MM:SS (ej: 2020-10-31T04:33:00)
+
+- En esta url se obtiene todo el historial de transacciones dentro de cierto intervalo de tiempo. Los parametros son:
+  - api_token: token del usuario
+  - from: fecha que se quiere que parta el intervalo
+  - to: fecha que se quiere que termine el intervalo
+- Para las fechas, se permite cualquier string que ruby pueda transformar a fecha. Un ejemplo sería: AAAA-MM-DDTHH:MM:SS (ej: 2020-10-31T04:33:00)
+
+## Buenas prácticas de desarrollo
 
 
+- :white_check_mark: Gitflow
+- :white_check_mark: Principios SOLID
 
-
-
-## Buenas prácticas de desarrollo 
-* :white_check_mark: Gitflow 
-* :white_check_mark: Principios fundamentales, SOLID, CLEAN.
 
 ## Bonus implementados
+
+- ### Deploy a Heroku
+
+- ### Segundo Fondo de Inversión
+
+- ### Usabilidad
+  Para la usabilidad del frontend se utilizó en primer lugar una Navbar para otorgar navegabilidad por la aplicación.
 
 ### Deploy a Heroku
 
@@ -80,9 +94,9 @@ La api es una interfaz para permitir a los usuarios acceder a cierta informació
 
 
 
+
 ## Entregables
 El informe actualizado de la Entrega1 se encuentra en docs.
-
 
 
 # Readme Repo Base
@@ -130,7 +144,7 @@ One assistant did the same installation as above but with the next details:
 - used rbenv for ruby installation
 - changed ".ruby-version" from 2.7 to 2.7.1 (did not install [`rbenv-aliases`](https://github.com/tpope/rbenv-aliases))
 - installed yarn but got a bug -> fix: https://stackoverflow.com/questions/46013544/yarn-install-command-error-no-such-file-or-directory-install
-- commented line  ```workers Integer(ENV['WEB_CONCURRENCY'] || 2)```
+- commented line `workers Integer(ENV['WEB_CONCURRENCY'] || 2)`
 - rails s -> server started
 
 ## Continuous Integrations
