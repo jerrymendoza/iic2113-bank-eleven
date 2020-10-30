@@ -25,6 +25,25 @@ El envio de correo se hace con ActionMailer, se necesitan varibles de entorno en
 
 ## API
 
+La api es una interfaz para permitir a los usuarios acceder a cierta información del sitio desde un nivel de abstracción más bajo que desde la pagina web. Los usuarios podran acceder a traves de la api a su historial de transacciones, o su historial en un determinado intervalo de tiempo. Para que los usuarios puedan acceder a esta información, deben acceder a la aplicación web, iniciar sesión y luego hacer click en [`access to token`] para obtener su token de accesso. Luego de esto pueden obtener información de la api de alguna de las siguientes url:
+
+     https://bankeleven.herokuapp.com/api/v1/transactions/?api_token={}
+
+- En esta url se obtiene todo el historial de transacciones. Se debe reemplazar {} por el token de usuario 
+&nbsp;
+
+
+    https://bankeleven.herokuapp.com/api/v1/transactions/date/?api_token={}&from={}&to={}
+- En esta url se obtiene todo el historial de transacciones dentro de cierto intervalo de tiempo. Los parametros son: 
+    * api_token: token del usuario
+    * from: fecha que se quiere que parta el intervalo
+    * to: fecha que se quiere que termine el intervalo
+-   Para las fechas, se permite cualquier string que ruby pueda transformar a fecha. Un ejemplo sería: AAAA-MM-DDTHH:MM:SS (ej: 2020-10-31T04:33:00)
+
+
+
+
+
 ## Buenas prácticas de desarrollo 
 * :white_check_mark: Gitflow 
 * :white_check_mark: Principios SOLID
