@@ -1,4 +1,3 @@
-
 Rails.application.configure do
   config.before_configuration do
     Dotenv.load(Dotenv::Railtie.root.join('.env.development'))

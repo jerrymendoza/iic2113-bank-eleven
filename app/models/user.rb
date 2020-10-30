@@ -3,6 +3,16 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  has_many :accounts, dependent: :delete_all
+
+  after_create :generate_api_token
+
+  private
+
+  def generate_api_token
+    self.api_token = Devise.friendly_token
+    save
+  end
 end
 
 # == Schema Information
@@ -17,6 +27,7 @@ end
 #  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  api_token              :string
 #
 # Indexes
 #

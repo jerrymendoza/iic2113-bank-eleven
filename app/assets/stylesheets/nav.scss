@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+}
+
+.content {
+  margin: 10px auto;
+  width: 70%;
+}
+
+.clearfix {
+  overflow: hidden;
+}
+
+header {
+  margin-bottom: 40px;
+  background-color: #c4dcfc;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    color: white;
+    font-weight: 200;
+    text-decoration: none;
+  }
+
+  li {
+    color: white;
+    display: inline;
+    margin-right: 10px;
+    padding: 0;
+  }
+}
+
+.left-nav {
+  color: white;
+  float: left;
+}
+
+.right-nav {
+  color: white;
+  float: right;
+}

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @account.number %>
+</p>
+
+<p>
+  <strong>Balance:</strong>
+  <%= @account.balance %>
+</p>
+
+<p>
+  <strong>Account type:</strong>
+  <%= @account.account_type %>
+</p>
+
+<li><%= link_to "See balances and movements", user_account_transactions_path(@user,@account) %></li>
+
+<%= link_to 'Back', user_accounts_path(@user) %>

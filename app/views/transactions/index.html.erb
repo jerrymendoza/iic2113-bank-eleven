@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+<h3>Transactions of account <%= @account.number %> </h3>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Transaction type</th>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>Balance</th>
+      <th>From</th>
+      <th>To</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @transactions.each do |transaction| %>
+      <% if transaction.account_id == @account.id && @user.id == current_user.id%>
+        <tr>
+          <td><%= transaction.transaction_type.capitalize %></td>
+          <td><%= transaction.date %></td>
+          <td><%= transaction.amount %></td>
+          <td><%= transaction.balance %></td>
+          <% if (transaction.deposit? || transaction.saving?)  %>
+            <td> <%= transaction.account_number %></td> 
+          <% else %>
+            <td> </td>
+          <% end %>
+          <% if transaction.transfer? %>
+            <td> <%= transaction.account_number %></td> 
+          <% else %>
+            <td> </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Transaction', new_transaction_path %>
+
+</div>
+ 
