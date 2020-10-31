@@ -34,6 +34,8 @@
 /config/master.key
 .env.local
 .env
+.env.production
+.env.development
 node_modules/
 
 /public/packs
