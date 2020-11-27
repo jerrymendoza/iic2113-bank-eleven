@@ -14,6 +14,20 @@
 
 4. Ejecutar el comando: rails s
 
+## Ejecución alternativa
+
+1. Setear las siguientes variables de entorno
+```
+GMAIL_USERNAME
+GMAIL_PASSWORD
+DB_HOST
+DB_PORT
+DB_USER
+```
+2. Correr `npm install`
+3. Hacer build con docker `docker-compose build`
+4. Para levantar localmente hacer `docker-compose up`
+
   
 
 ## Ejecución en producción
