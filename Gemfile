@@ -32,7 +32,7 @@ gem 'strong_migrations'
 gem 'turbolinks', '~> 5'
 gem 'versionist'
 gem 'webpacker', '~> 4.0'
-
+gem 'httparty', '~> 0.13.7'
 group :development do
   gem 'annotate', '~> 3.0'
   gem 'listen'
