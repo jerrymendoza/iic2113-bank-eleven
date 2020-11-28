@@ -4,6 +4,6 @@ class ExchangesController < ApplicationController
             headers: { 
                 "Accept" => "application/json" 
         })
-        coins = response.to_a
+        response.to_a
     end
 end

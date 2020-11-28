@@ -9,7 +9,7 @@ class BankInversionWorker
   def perform
     loop do
       accounts = Account.where(account_type: 1)
-      sleep 3600
+      sleep 10
       random_value = rand(-0.03..0.03)
       accounts.each do |account|
         account.balance = account.balance + account.balance * random_value
