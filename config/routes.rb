@@ -9,6 +9,8 @@ Rails.application.routes.draw do
                                               as: 'confirm_transaction'
   post 'transactions/create_deposit', to: 'transactions#create_deposit', as: 'create_deposit'
   get 'api/v1/transactions/date', to: 'api/v1/transactions#date'
+  get 'exchanges/test', to: 'exchanges#get_coins'
+  get 'exchanges/test_buy', to: 'exchanges#buy_btf'
 
   scope path: '/api' do
     api_version(module: "Api::V1", path: { value: "v1" }, defaults: { format: 'json' }) do
