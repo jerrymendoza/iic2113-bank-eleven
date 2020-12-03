@@ -1,5 +1,7 @@
 class Account < ApplicationRecord
   before_create :new_unique_number
+  has_many :percentages
+  has_many :exchanges, through: :percentages
 
   def new_unique_number
     last_account = Account.order('number::integer DESC').first

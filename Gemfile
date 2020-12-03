@@ -33,7 +33,6 @@ gem 'turbolinks', '~> 5'
 gem 'versionist'
 gem 'webpacker', '~> 4.0'
 gem 'httparty', '~> 0.13.7'
-gem 'json', '~> 1.8', '>= 1.8.3'
 
 group :development do
   gem 'annotate', '~> 3.0'

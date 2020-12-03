@@ -1,3 +1,8 @@
+class Exchange < ApplicationRecord
+    has_many :percentages
+    has_many :accounts, through: :percentages
+end
+
 # == Schema Information
 #
 # Table name: exchanges
@@ -9,5 +14,3 @@
 #  tipo       :string
 #  valor_btf  :integer
 #
-module ExchangesHelper
-end
