@@ -50,7 +50,7 @@ class BankInversionWorker
     end
   end
 
-  def invest(cantidad_btf)
+  def invest(cantidad_btf, pozo)
     puts "11"
     if Exchange.count == 0
       puts "12"
@@ -64,7 +64,7 @@ class BankInversionWorker
     end
     @@bank_exchange.exchange_btf(cantidad_btf, tipo)
     puts "2"
-    Exchange.create(monto: cantidad_btf, tipo: tipo, valor_btf: @@bank_exchange.get_coins["coins"][0]["precio_venta"])
+    Exchange.create(monto: pozo, tipo: tipo, valor_btf: @@bank_exchange.get_coins["coins"][0]["precio_venta"])
     puts "3"
 
   end
@@ -81,7 +81,7 @@ class BankInversionWorker
       puts "5"
       cantidad_btf, pozo = get_total_money(accounts)
       puts "6"
-      invest(cantidad_btf)
+      invest(cantidad_btf, pozo)
       puts "7"
       set_percentages(pozo, accounts)
       puts "8"
