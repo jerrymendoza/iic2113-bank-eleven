@@ -6,7 +6,7 @@
 class BankInversionWorker
   include Sidekiq::Worker
   @@bank_exchange = ExchangesController.new
- 
+
 
   def get_total_money(accounts)
     pozo = 0
@@ -42,7 +42,7 @@ class BankInversionWorker
   end
 
   def set_percentages(pozo, accounts)
-     #guardar porcentajes de nueva transaccion
+    # guardar porcentajes de nueva transaccion
     exchange_id = Exchange.last.id
     accounts.each do |account|
       porcentaje = account.balance/pozo
@@ -52,7 +52,7 @@ class BankInversionWorker
 
   def invest(cantidad_btf)
     puts "11"
-    if Exchange.first.nil?
+    if Exchange.count == 0
       puts "12"
       tipo = "COMPRA"
     elsif cantidad_btf < Exchange.all.last.valor_btf
@@ -74,7 +74,7 @@ class BankInversionWorker
       accounts = Account.where(account_type: 1)
       sleep 10
       puts "4"
-      if Exchange.first.nil?
+      if Exchange.count != 0
         puts "exchange any"
         payout_investments(accounts)
       end
