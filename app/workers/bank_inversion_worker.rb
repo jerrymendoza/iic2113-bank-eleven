@@ -6,6 +6,7 @@
 class BankInversionWorker
   include Sidekiq::Worker
   @@bank_exchange = ExchangesController.new
+  @@compra_venta = {"VENTA": "precio_venta", "COMPRA": "precio_compra"}
 
 
   def get_total_money(accounts)
@@ -64,7 +65,7 @@ class BankInversionWorker
     end
     @@bank_exchange.exchange_btf(cantidad_btf, tipo)
     puts "2"
-    Exchange.create(monto: pozo, tipo: tipo, valor_btf: @@bank_exchange.get_coins["coins"][0]["precio_venta"])
+    Exchange.create(monto: pozo, tipo: tipo, valor_btf: @@bank_exchange.get_coins["coins"][0][@@compra_venta["tipo"]])
     puts "3"
 
   end
