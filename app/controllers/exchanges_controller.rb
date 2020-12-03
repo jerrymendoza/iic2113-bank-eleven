@@ -1,15 +1,18 @@
 class ExchangesController < ApplicationController
     def get_coins
+        puts "9"
         @exchanges = Exchange.all
         response = HTTParty.get("http://api.exchangesix.com/api/v1/coins", 
             headers: { 
-                "Accept" => "application/json" 
+                "Accept" => "application/json" ,
+                'Content-Type' => 'application/json'
         })
         puts response
-        puts response["precio_venta"]
+        return response
     end
 
-    def buy_btf(ammount=1)
+    def exchange_btf(ammount=1, tipo="COMPRA")
+        puts "10"
         options = { 
             headers: { 
                 'Content-Type': 'application/json',
@@ -18,23 +21,7 @@ class ExchangesController < ApplicationController
             body: {
                 "coin_id": 1,
                 "cantidad": ammount,
-                "tipo": "COMPRA"
-            }.to_json
-        }
-        response = HTTParty.post("http://api.exchangesix.com/api/v1/transactions", options)
-        puts response
-    end
-
-    def sell_btf(ammount=1)
-        options = { 
-            headers: { 
-                'Content-Type': 'application/json',
-                "Authorization": "Bearer #{ENV["TOKEN_EXCHANGE"]}"
-            },
-            body: {
-                "coin_id": 1,
-                "cantidad": ammount,
-                "tipo": "VENTA"
+                "tipo": tipo
             }.to_json
         }
         response = HTTParty.post("http://api.exchangesix.com/api/v1/transactions", options)
