@@ -464,6 +464,7 @@ DEPENDENCIES
   guard-rspec
   httparty (~> 0.13.7)
   jbuilder (~> 2.7)
+  json (~> 1.8, >= 1.8.3)
   jwt
   listen
   marcel (~> 0.3.3)

@@ -4,7 +4,9 @@ class ExchangesController < ApplicationController
             headers: { 
                 "Accept" => "application/json" 
         })
-        puts response.to_a
+        puts response
+        json_object = JSON.parse(response.body)
+        puts json_object[:precio_venta]
     end
 
     def buy_btf(ammount=1)
@@ -20,7 +22,7 @@ class ExchangesController < ApplicationController
             }.to_json
         }
         response = HTTParty.post("http://api.exchangesix.com/api/v1/transactions", options)
-        puts response.to_a
+        puts response
     end
 
     def sell_btf(ammount=1)
@@ -36,6 +38,6 @@ class ExchangesController < ApplicationController
             }.to_json
         }
         response = HTTParty.post("http://api.exchangesix.com/api/v1/transactions", options)
-        puts response.to_a
+        puts response
     end
 end
