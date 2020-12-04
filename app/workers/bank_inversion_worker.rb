@@ -26,15 +26,20 @@ class BankInversionWorker
     pozo_nuevo = @@bank_exchange.get_coins["coins"][0]["precio_venta"]*last_exchange.monto
     puts "1"
     puts @@bank_exchange.get_coins["coins"][0]["precio_venta"]
-    pozo_viejo = last_exchange.valor_btf*last_exchange.monto
+    pozo_viejo = last_exchange.valor_btf * last_exchange.monto
     return pozo_nuevo - pozo_viejo
   end
 
   def payout_investments(accounts) #actualizamos las cuentas en base al porcentaje
     payout = get_payout()
+    puts "sali del payout"
     accounts.each do |account|
-      if !Percentage.where(account_id: account.id).nil?
-        porcentaje = Percentage.where(account_id: account.id).last.porcentaje
+      percent = Percentage.where(account_id: account.id)
+      # puts "percent: #{percent.last}"
+      # puts "percent: #{percent.last.porcentaje}"
+      
+      if !percent.last.nil?
+        porcentaje = percent.last.porcentaje
         account.balance += porcentaje * payout
         account.save
 
@@ -45,9 +50,12 @@ class BankInversionWorker
   def set_percentages(pozo, accounts)
     # guardar porcentajes de nueva transaccion
     exchange_id = Exchange.last.id
+    puts "500"
     accounts.each do |account|
+      puts "600"
       porcentaje = account.balance/pozo
       Percentage.create(porcentaje: porcentaje, exchange_id: exchange_id, account_id: account.id)
+      puts "700"
     end
   end
 
@@ -65,7 +73,7 @@ class BankInversionWorker
     end
     @@bank_exchange.exchange_btf(cantidad_btf, tipo)
     puts "2"
-    Exchange.create(monto: pozo, tipo: tipo, valor_btf: @@bank_exchange.get_coins["coins"][0][@@compra_venta["tipo"]])
+    Exchange.create(monto: pozo, tipo: tipo, valor_btf: @@bank_exchange.get_coins["coins"][0][@@compra_venta[tipo]])
     puts "3"
 
   end
@@ -75,6 +83,7 @@ class BankInversionWorker
       accounts = Account.where(account_type: 1)
       sleep 10
       puts "4"
+      puts Exchange.count
       if Exchange.count != 0
         puts "exchange any"
         payout_investments(accounts)
