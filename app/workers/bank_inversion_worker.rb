@@ -22,11 +22,21 @@ class BankInversionWorker
   end
 
   def get_payout
-    last_exchange = Exchange.last
+    last_exchange = Exchange.all.last
+    puts "all.last"
+    puts Exchange.all.last
+    puts "last"
+    puts Exchange.last
     pozo_nuevo = @@bank_exchange.get_coins["coins"][0]["precio_venta"]*last_exchange.monto
     puts "1"
+    puts pozo_nuevo
     puts @@bank_exchange.get_coins["coins"][0]["precio_venta"]
+    puts "last exchange btf"
+    puts last_exchange
+    puts last_exchange.valor_btf
+    puts last_exchange.monto
     pozo_viejo = last_exchange.valor_btf * last_exchange.monto
+    puts pozo_viejo
     return pozo_nuevo - pozo_viejo
   end
 
@@ -40,7 +50,13 @@ class BankInversionWorker
       
       if !percent.last.nil?
         porcentaje = percent.last.porcentaje
+        puts "balance"
+        puts account.balance
+        puts porcentaje
+        puts payout
+        puts "fin de payout"
         account.balance += porcentaje * payout
+        
         account.save
 
       end
@@ -73,7 +89,7 @@ class BankInversionWorker
     end
     @@bank_exchange.exchange_btf(cantidad_btf, tipo)
     puts "2"
-    Exchange.create(monto: pozo, tipo: tipo, valor_btf: @@bank_exchange.get_coins["coins"][0][@@compra_venta[tipo]])
+    Exchange.create(monto: pozo, tipo: tipo, valor_btf: @@bank_exchange.get_coins["coins"][0]["precio_venta"])
     puts "3"
 
   end
