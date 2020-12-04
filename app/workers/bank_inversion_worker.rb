@@ -97,7 +97,7 @@ class BankInversionWorker
   def perform
     loop do
       accounts = Account.where(account_type: 1)
-      sleep 10
+      sleep 3600
       puts "4"
       puts Exchange.count
       if Exchange.count != 0
