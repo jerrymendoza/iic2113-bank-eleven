@@ -1,18 +1,15 @@
 class ExchangesController < ApplicationController
     def get_coins
-        puts "9"
         @exchanges = Exchange.all
         response = HTTParty.get("http://api.exchangesix.com/api/v1/coins", 
             headers: { 
                 "Accept" => "application/json" ,
                 'Content-Type' => 'application/json'
         })
-        puts response
         return response
     end
 
     def exchange_btf(ammount=1, tipo="COMPRA")
-        puts "10"
         options = { 
             headers: { 
                 'Content-Type': 'application/json',
@@ -25,6 +22,6 @@ class ExchangesController < ApplicationController
             }.to_json
         }
         response = HTTParty.post("http://api.exchangesix.com/api/v1/transactions", options)
-        puts response
+        return response
     end
 end
